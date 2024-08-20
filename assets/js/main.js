@@ -12,10 +12,10 @@ async function getCategories(){
     .then(data =>{//por standar se le nombra data al string de json
     console.log(data);
     selectCategories(data.categories);
-
+    showCategories(data.categories);
     })
     .catch(error =>{//en caso de que haya lanzado un error se captura
-    alert("Hubo un erro: "+error)
+    alert("Hubo un error: "+error)
     })
 }
 //llamar a la funcion asincrona
@@ -39,4 +39,24 @@ const selectCategories = (categorias) => {
         //para que se añadan las opciones
         selectElement.appendChild(option);
     });
+}
+
+const showCategories = (categorias) => {
+    //apunta al select y se añade evento onchange
+    document.getElementById("categorias").addEventListener("change", () =>{
+        const selection = document.getElementById("categorias").value;
+
+        //se busca el valor seleccionado dentro de las categorias del data
+        const selectedCategory = categorias.find(categoria => categoria.idCategory === selection);
+
+        //se manda a imprimir info en el div
+        document.getElementById("resultado").innerHTML = `
+        <div class="container-fluid border m-2 p-4">
+        <h3>${selectedCategory.strCategory}</h3>
+        <img src="${selectedCategory.strCategoryThumb}" 
+            alt="${selectedCategory.strCategory}" class="img-fluid"><br>
+        <p>${selectedCategory.strCategoryDescription}</p>
+        </div>
+        `;
+    }); 
 }
