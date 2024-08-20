@@ -21,11 +21,6 @@ async function getCategories(){
 //llamar a la funcion asincrona
 getCategories();
 
-
-
-
-
-
 //funcion para mostrar categorias obtenidas en el select para el usuario
 const selectCategories = (categorias) => {
     categorias.sort((a,b) => a.strCategory.localeCompare(b.strCategory));
@@ -85,11 +80,25 @@ async function getRecipes(selectedCategory){
     showRecipes(data.meals);
     })
     .catch(error =>{//en caso de que haya lanzado un error se captura
-    alert("Hubo un error: "+error)
+    alert("Hubo un error: "+error);
     })
 }
 
 const showRecipes = (meals) => {
+    const recetas = document.getElementById("recetas");
 
+    meals.forEach(receta =>{
+        const card = document.createElement("div");
+        card.classList.add("card")
+        card.innerHTML = `
+        <div class="card-header">${receta.strMeal}</div>
+        <div class="card-body">
+        <img src="${receta.strMealThumb}" 
+            alt="${receta.strMeal}" class="img-fluid">
+            </div>
+        <div class="card-footer">${receta.idMeal}</div>`
+
+        recetas.appendChild(card);
+    });
     
 }
