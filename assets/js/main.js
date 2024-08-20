@@ -21,6 +21,11 @@ async function getCategories(){
 //llamar a la funcion asincrona
 getCategories();
 
+
+
+
+
+
 //funcion para mostrar categorias obtenidas en el select para el usuario
 const selectCategories = (categorias) => {
     categorias.sort((a,b) => a.strCategory.localeCompare(b.strCategory));
@@ -54,9 +59,37 @@ const showCategories = (categorias) => {
         <div class="container-fluid border m-2 p-4">
         <h3>${selectedCategory.strCategory}</h3>
         <img src="${selectedCategory.strCategoryThumb}" 
-            alt="${selectedCategory.strCategory}" class="img-fluid"><br>
+            alt="${selectedCategory.strCategory}" class="img-fluid">
+        <br>
         <p>${selectedCategory.strCategoryDescription}</p>
         </div>
+        <div id="recetas"></div>
         `;
+        getRecipes(selectedCategory.strCategory)
     }); 
+}
+
+async function getRecipes(selectedCategory){
+    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`
+
+    fetch(url)
+    .then(response =>{
+        if (!response.ok){//si la respuesta no salio bien (no fue dentro de los 200)
+            throw new Error("Respuesta erronea al conectar");
+        }
+        return response.json();//devuelve info en json
+    })
+    
+    .then(data =>{//por standar se le nombra data al string de json
+    console.log(data);
+    showRecipes(data.meals);
+    })
+    .catch(error =>{//en caso de que haya lanzado un error se captura
+    alert("Hubo un error: "+error)
+    })
+}
+
+const showRecipes = (meals) => {
+
+    
 }
