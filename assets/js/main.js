@@ -58,7 +58,7 @@ const showCategories = (categorias) => {
         <br>
         <p>${selectedCategory.strCategoryDescription}</p>
         </div>
-        <div id="recetas"></div>
+        <div id="recetas" class="row"></div>
         `;
         getRecipes(selectedCategory.strCategory)
     }); 
@@ -89,14 +89,16 @@ const showRecipes = (meals) => {
 
     meals.forEach(receta =>{
         const card = document.createElement("div");
-        card.classList.add("card")
+        card.classList.add("col-sm-3")
         card.innerHTML = `
+        <div class="card">
         <div class="card-header">${receta.strMeal}</div>
         <div class="card-body">
         <img src="${receta.strMealThumb}" 
             alt="${receta.strMeal}" class="img-fluid">
             </div>
-        <div class="card-footer">${receta.idMeal}</div>`
+        <div class="card-footer">${receta.idMeal}</div>
+        </div>`
 
         recetas.appendChild(card);
     });
